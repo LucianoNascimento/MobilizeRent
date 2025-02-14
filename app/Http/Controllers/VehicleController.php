@@ -5,16 +5,19 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreVehicleRequest;
 use App\Http\Requests\UpdateVehicleRequest;
 use App\Models\Vehicle;
+use App\Services\Image\ImageService;
 use App\Services\Vehicle\VehicleService;
 use Illuminate\Http\JsonResponse;
 
 class VehicleController extends Controller
 {
     protected VehicleService $vehicleService;
+    protected ImageService $imageService;
 
-    public function __construct(VehicleService $vehicleService)
+    public function __construct(VehicleService $vehicleService, ImageService $imageService)
     {
         $this->vehicleService = $vehicleService;
+        $this->imageService = $imageService;
     }
 
     /**
@@ -41,7 +44,14 @@ class VehicleController extends Controller
     public function store(StoreVehicleRequest $request): JsonResponse
     {
         $vehicle = $this->vehicleService->saveVehicle($request->validated());
-        return response()->json($vehicle, 201);
+        $imageData = array();
+
+        if ($request->hasFile('images')) {
+            $images = $request->file('images');
+            $imageData = $this->imageService->uploadImages($images, $vehicle->id);
+        }
+
+        return response()->json(['vehicle' => $vehicle, 'images' => $imageData],201);
     }
 
     /**
