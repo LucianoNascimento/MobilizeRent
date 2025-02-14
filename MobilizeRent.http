@@ -1,0 +1,37 @@
+
+### GET request to example server
+GET http://localhost/api/images
+
+### POST vehicle
+POST http://localhost/api/vehicles
+Accept: application/json
+Content-Type: application/json
+
+{
+    "vehicle_type": "car",
+    "model": "sedan",
+    "brand": "Toyota",
+    "color": "red",
+    "daily_price": 100
+}
+
+
+
+### POST VAI DAR CERTO
+POST http://localhost/api/images
+Accept: application/json
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="vehicle_id"
+
+1
+--boundary
+Content-Disposition: form-data; name="images[]"; filename="Imagem.png"
+
+< C:\Users\Luciano\Desktop\Imagem.png
+--boundary
+Content-Disposition: form-data; name="images[]"; filename="Imagem2.png"
+
+< C:\Users\Luciano\Desktop\Imagem2.png
+--boundary--

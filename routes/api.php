@@ -1,12 +1,19 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [RegisterController::class, 'login']);
+
+Route::get('/images', [ImageController::class, 'index'])->name('image.index');
+Route::post('/images', [ImageController::class, 'store'])->name('image.store');
+Route::put('/image/{id}', [ImageController::class, 'update'])->name('image.update');
+Route::patch('/image/{id}', [ImageController::class, 'updateStatus'])->name('image.updateImage');
+Route::delete('/image/{id}', [ImageController::class, 'destroy'])->name('image.destroy');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicle.index');
