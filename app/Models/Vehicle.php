@@ -4,9 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Str;
-
+use Illuminate\Database\Eloquent\Relations\HasMany;
 class Vehicle extends Model
 {
 
@@ -14,4 +12,14 @@ class Vehicle extends Model
 
     protected $fillable = ['vehicle_type', 'model', 'brand', 'color', 'daily_price'];
 
+    protected $hidden = ['id'];
+
+    public function getDailyPriceAttribute($value): string
+    {
+        return 'R$ ' . number_format($value, 2, ',', '.'); // Formata o valor como moeda
+    }
+    public function images():HasMany
+    {
+        return $this->hasMany(Image::class);
+    }
 }

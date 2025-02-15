@@ -7,7 +7,7 @@ use App\Http\Requests\RegisterRequest;
 use App\Services\Register\RegisterService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Response;
 
 class RegisterController extends Controller
 {
@@ -22,7 +22,7 @@ class RegisterController extends Controller
     {
         $user = $this->registerService->registerUser($request->all());
 
-        return response()->json($user, 201);
+        return response()->json($user, Response::HTTP_OK);
     }
 
     public function login(Request $request): JsonResponse

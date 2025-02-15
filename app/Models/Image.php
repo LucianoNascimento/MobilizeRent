@@ -13,6 +13,7 @@ class Image extends Model
 
     protected $fillable = ['vehicle_id', 'path'];
 
+    protected $hidden = ['id','vehicle_id'];
     public function vehicle(): BelongsTo
     {
         return $this->belongsTo(Vehicle::class);

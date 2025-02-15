@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateImageRequest;
 use App\Models\Image;
 use App\Services\Image\ImageService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 
 class ImageController extends Controller
@@ -27,7 +28,7 @@ class ImageController extends Controller
         $images = Cache::remember('images', 3600, function () {
             return $this->imageService->allImages();
         });
-        return response()->json($images, 200);
+        return response()->json($images, Response::HTTP_OK);
     }
 
     /**
@@ -50,7 +51,7 @@ class ImageController extends Controller
         return response()->json([
             'message' => 'Imagem(s) carregada(s) com sucesso',
             'data' => $imageData
-        ], 201);
+        ], Response::HTTP_CREATED);
     }
 
     /**
