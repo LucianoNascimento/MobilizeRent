@@ -14,10 +14,11 @@ Route::post('/images', [ImageController::class, 'store'])->name('image.store');
 Route::put('/image/{id}', [ImageController::class, 'update'])->name('image.update');
 Route::patch('/image/{id}', [ImageController::class, 'updateStatus'])->name('image.updateImage');
 Route::delete('/image/{id}', [ImageController::class, 'destroy'])->name('image.destroy');
-
+Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicle.index');
+Route::post('/vehicles', [VehicleController::class, 'store'])->name('vehicle.store');
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicle.index');
-    Route::post('/vehicles', [VehicleController::class, 'store'])->name('vehicle.store');
+//    Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicle.index');
+//    Route::post('/vehicles', [VehicleController::class, 'store'])->name('vehicle.store');
     Route::put('/vehicle/{id}', [VehicleController::class, 'update'])->name('vehicle.update');
     Route::delete('/vehicle/{id}', [VehicleController::class, 'destroy'])->name('vehicle.destroy');
 

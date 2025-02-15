@@ -8,6 +8,7 @@ use App\Models\Image;
 use App\Services\Image\ImageService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Throwable;
@@ -27,7 +28,9 @@ class ImageController extends Controller
     public function index(): JsonResponse
     {
 
-        $images = $this->imageService->allImages();
+        $images = Cache::remember('images', 3600, function () {
+            return $this->imageService->allImages();
+        });
         return response()->json($images, 200);
     }
 
@@ -45,23 +48,14 @@ class ImageController extends Controller
 
     public function store(StoreImageRequest $request): JsonResponse
     {
-        try {
-            $images = $request->file('images');
-            $imageData = $this->imageService->uploadImages($images, $request->vehicle_id);
+        $images = $request->file('images');
+        $imageData = $this->imageService->uploadImages($images, $request->vehicle_id);
 
-            return response()->json([
-                'message' => 'Imagem(s) carregada(s) com sucesso',
-                'data' => $imageData
-            ], 201);
-
-        } catch (Throwable $e) {
-            return response()->json([
-                'message' => 'Falha ao carregar as imagens: ' . $e->getMessage()
-            ], 500);
-        }
+        return response()->json([
+            'message' => 'Imagem(s) carregada(s) com sucesso',
+            'data' => $imageData
+        ], 201);
     }
-
-
 
     /**
      * Display the specified resource.
