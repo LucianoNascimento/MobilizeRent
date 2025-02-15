@@ -8,6 +8,8 @@ use App\Models\Vehicle;
 use App\Services\Image\ImageService;
 use App\Services\Vehicle\VehicleService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cache;
 
 class VehicleController extends Controller
 {
@@ -20,13 +22,13 @@ class VehicleController extends Controller
         $this->imageService = $imageService;
     }
 
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(): JsonResponse
     {
-        $vehicle = $this->vehicleService->getAllVehicles();
-        return response()->json($vehicle);
+        $vehicles = Cache::remember('vehicle', 3600, function () {
+           return $this->vehicleService->getAllVehicles();
+        });
+        return response()->json($vehicles, Response::HTTP_OK);
 
     }
 
@@ -51,7 +53,7 @@ class VehicleController extends Controller
             $imageData = $this->imageService->uploadImages($images, $vehicle->id);
         }
 
-        return response()->json(['vehicle' => $vehicle, 'images' => $imageData],201);
+        return response()->json(['vehicle' => $vehicle, 'images' => $imageData], 201);
     }
 
     /**
@@ -76,7 +78,7 @@ class VehicleController extends Controller
     public function update(UpdateVehicleRequest $request, string $id): JsonResponse
     {
         $vehicle = $this->vehicleService->updateVehicle($id, $request->validated());
-        return response()->json($vehicle, 200);
+        return response()->json($vehicle, Response::HTTP_OK);
     }
 
     /**
@@ -85,6 +87,6 @@ class VehicleController extends Controller
     public function destroy(string $id): JsonResponse
     {
         $this->vehicleService->deleteVehicle($id);
-        return response()->json(null, 204);
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }

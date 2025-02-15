@@ -9,7 +9,8 @@ class VehicleRepository implements VehicleRepositoryInterface
 {
     public function getAll(): Collection
     {
-        return Vehicle::select('vehicle_type', 'model', 'brand', 'color', 'daily_price')->get();
+        return Vehicle::with(['images' => fn($query) => $query->select('vehicle_id', 'path')
+        ])->select('id', 'vehicle_type', 'model', 'brand', 'color', 'daily_price')->get();
     }
 
     public function findOrFail(string $vehicleId): Vehicle
