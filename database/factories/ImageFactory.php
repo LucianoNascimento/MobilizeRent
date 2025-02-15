@@ -17,7 +17,7 @@ class ImageFactory extends Factory
     public function definition(): array
     {
         return [
-            'vehicle_id' => $this->faker->numberBetween(1, 10),
+            'vehicle_id' => 3,
             'path' => 'public'.DIRECTORY_SEPARATOR. 'images' .DIRECTORY_SEPARATOR. $this->faker->uuid . '.jpg',
         ];
     }

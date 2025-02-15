@@ -27,7 +27,6 @@ class StoreVehicleRequest extends FormRequest
             'brand' => 'nullable',
             'color' => 'nullable',
             'daily_price' => 'required|numeric',
-            'image_url' => 'nullable'
         ];
     }
 }
