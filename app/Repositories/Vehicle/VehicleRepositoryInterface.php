@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 
 interface VehicleRepositoryInterface
 {
-    public function getAll():Collection ;
+    public function getAll();
 
     public function findOrFail(string $vehicleId): Vehicle;
 
