@@ -51,15 +51,20 @@ class ImageController extends Controller
         return response()->json([
             'message' => 'Imagem(s) carregada(s) com sucesso',
             'data' => $imageData
-        ], Response::HTTP_CREATED);
+        ], 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Image $image)
+    public function show($id): JsonResponse
     {
-        //
+        $image = Cache::remember('images_{id}', 3600, function () use ($id) {
+            return $this->imageService->detailImageVehicle($id);
+        });
+
+        return response()->json($image, Response::HTTP_OK);
+
     }
 
     /**

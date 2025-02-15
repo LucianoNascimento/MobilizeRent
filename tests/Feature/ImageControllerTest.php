@@ -57,4 +57,15 @@ class ImageControllerTest extends TestCase
             'vehicle_id' => $vehicleId,
         ]);
     }
+
+    public function test_show_returns_200(): void
+    {
+        $vehicle = Vehicle::factory()->create();
+
+        $image = Image::factory()->create(['vehicle_id' => $vehicle->id]);
+
+        $response = $this->getJson("/api/images/{$image->id}");
+
+        $response->assertStatus(200);
+    }
 }

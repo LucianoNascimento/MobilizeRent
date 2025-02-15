@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [RegisterController::class, 'login']);
 Route::get('/images', [ImageController::class, 'index'])->name('image.index');
+Route::get('/images/{id}', [ImageController::class, 'show'])->name('vehicle.show');
 Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicle.index');
 
 Route::middleware('auth:sanctum')->group(function () {
