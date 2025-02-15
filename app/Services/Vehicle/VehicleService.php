@@ -16,7 +16,7 @@ class VehicleService
         $this->vehicleRepository = $vehicleRepository;
     }
 
-    public function getAllVehicles(): Collection
+    public function getAllVehicles()
     {
         return $this->vehicleRepository->getAll();
     }
