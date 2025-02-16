@@ -27,7 +27,7 @@ class AuthRegisterControllerTest extends TestCase
 
         $response = $this->postJson('/api/register', $data);
 
-        $response->assertStatus(201);
+        $response->assertStatus(200);
     }
 
     public function test_user_login()

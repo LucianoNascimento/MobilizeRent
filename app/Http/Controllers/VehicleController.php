@@ -53,7 +53,7 @@ class VehicleController extends Controller
             $imageData = $this->imageService->uploadImages($images, $vehicle->id);
         }
 
-        return response()->json(['vehicle' => $vehicle, 'images' => $imageData], 201);
+        return response()->json(['vehicle' => $vehicle, 'images' => $imageData], Response::HTTP_CREATED);
     }
 
     /**

@@ -18,6 +18,9 @@ class ImageControllerTest extends TestCase
         // Mockando o storage para não salvar arquivos de verdade
         Storage::fake('public');
 
+        // Criando um usuário fictício
+        $user = \App\Models\User::factory()->create();
+
         // Criando um veículo com ID 1
         $vehicle = Vehicle::factory()->create(['id' => 1]);
 
@@ -28,8 +31,8 @@ class ImageControllerTest extends TestCase
             UploadedFile::fake()->image('image2.jpg')
         ];
 
-        // Fazendo a requisição POST para o endpoint de upload de imagens
-        $response = $this->postJson('/api/images', [
+        // Autenticando a requisição como o usuário criado
+        $response = $this->actingAs($user)->postJson('/api/images', [
             'vehicle_id' => $vehicleId,
             'images' => $files,
         ]);
@@ -57,6 +60,7 @@ class ImageControllerTest extends TestCase
             'vehicle_id' => $vehicleId,
         ]);
     }
+
 
     public function test_show_returns_200(): void
     {
