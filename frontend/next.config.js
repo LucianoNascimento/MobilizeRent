@@ -1,5 +1,10 @@
-module.exports = {
-    images: {
-        domains: ['via.placeholder.com', 'duyn491kcolsw.cloudfront.net'],
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+    experimental: {
+        turbo: {
+            loaders: {},
+        },
     },
 };
+
+module.exports = nextConfig;
