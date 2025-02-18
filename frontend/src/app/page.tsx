@@ -1,50 +1,52 @@
-'use client';
-import {useEffect, useState} from "react";
-import MetaHeader from '../components/MetaHeader';
-import Loading from '../components/Loading';
-import ImageGrid from '../components/ImageGrid';
-import Footer from '../components/Footer';
-import {fetchImages, ImageProps} from "@/lib/api";
-import Navbar from "@/components/Navbar";
+'use client'
+import React, { useEffect, useState } from 'react';
+import NavBar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import ImageGrid from "@/components/ImageGrid";
+import { fetchImages, ImageProps } from "@/lib/api";
+import Loading from "@/components/Loading";
 
 export default function Home() {
     const [images, setImages] = useState<ImageProps[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const getImages = async () => {
+        const fetchData = async () => {
             try {
-                const data = await fetchImages();
-                console.log('Dados recebidos da API:', data);
-                setImages(data);
+                const imageList = await fetchImages();
+                setImages(imageList);
+                setLoading(false);
             } catch (error) {
-                console.error(error);
-            } finally {
+                console.error("Erro ao buscar imagens:", error);
                 setLoading(false);
             }
         };
 
-        getImages();
+        fetchData();
     }, []);
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-[#F0D333] py-2">
-            <MetaHeader/>
-            <Navbar/>
+        <div className="min-h-screen bg-gray-100">
+            <NavBar />
 
-            <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-                <h1 className="text-6xl font-bold">
-                    Bem-vindo(a) a <span className="text-[#4CC9F5]"> MobilizeRent</span> <span className="text-blue-600">O Sistema de Aluguel de Veículos</span>
-                </h1>
+            <main>
+                <div className="text-center py-10">
+                    <h1 className="text-4xl font-bold mb-4">Bem vindo(a) MobilizeRent</h1>
+                    <p className="text-lg text-gray-700">Descubra o veículo ideal para cada momento da jornada</p>
+                </div>
 
-                <p className="mt-3 text-2xl">
-                    Descubra o veículo ideal para cada momento da sua jornada!
-                </p>
-
-                {loading ? (<Loading/>) : (<ImageGrid images={images}/>)}
+                <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+                    {loading ? (
+                        <div className="flex justify-center items-center h-96">
+                            <Loading />
+                        </div>
+                    ) : (
+                        <ImageGrid images={images} />
+                    )}
+                </div>
             </main>
 
-            <Footer/>
+            <Footer />
         </div>
     );
 }
