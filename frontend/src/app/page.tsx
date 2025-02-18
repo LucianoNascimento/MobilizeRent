@@ -1,29 +1,33 @@
 'use client'
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import NavBar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ImageGrid from "@/components/ImageGrid";
 import { fetchImages, ImageProps } from "@/lib/api";
 import Loading from "@/components/Loading";
 
+const fetchData = async (setImages: React.Dispatch<React.SetStateAction<ImageProps[]>>, setIsLoading: React.Dispatch<React.SetStateAction<boolean>>) => {
+    try {
+        const imageList = await fetchImages();
+        setImages(imageList);
+        setIsLoading(false);
+    } catch (error) {
+        console.error("Erro ao buscar imagens:", error);
+        setIsLoading(false);
+    }
+};
+
 export default function Home() {
     const [images, setImages] = useState<ImageProps[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
+
+    const fetchImagesData = useCallback(() => {
+        fetchData(setImages, setIsLoading);
+    }, []);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const imageList = await fetchImages();
-                setImages(imageList);
-                setLoading(false);
-            } catch (error) {
-                console.error("Erro ao buscar imagens:", error);
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, []);
+        fetchImagesData();
+    }, [fetchImagesData]);
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -36,7 +40,7 @@ export default function Home() {
                 </div>
 
                 <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-                    {loading ? (
+                    {isLoading ? (
                         <div className="flex justify-center items-center h-96">
                             <Loading />
                         </div>

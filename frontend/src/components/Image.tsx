@@ -23,16 +23,16 @@ interface ImageProps {
 const Image: React.FC<{ image: ImageProps }> = ({ image }) => {
     const completePath = `storage/${image.path}`;
     return (
-        <div className="p-4 border rounded-xl">
-            <img src={`http://localhost:80/${completePath}`} alt={`${image.vehicle.brand} ${image.vehicle.model}`} className="w-full h-64 object-cover"/>
-            <div className="mt-2 text-xl">
+        <div className="p-4 border rounded-xl hover-in">
+            <img src={`http://localhost:80/${completePath}`} alt={`${image.vehicle.brand} ${image.vehicle.model}`} className="w-full h-64 object-cover hover-zoom-in" />
+            <div className="mt-2 text-xl text-center">
                 <p><strong>Tipo:</strong> {image.vehicle.vehicle_type}</p>
                 <p><strong>Modelo:</strong> {image.vehicle.model}</p>
                 <p><strong>Marca:</strong> {image.vehicle.brand}</p>
                 <p><strong>Cor:</strong> {image.vehicle.color}</p>
                 <p>
                     <strong>Preço Diário:</strong>
-                    <span className="blur-sm text-gray-500">{image.vehicle.daily_price}</span>
+                    <span>{image.vehicle.daily_price}</span>
                 </p>
             </div>
         </div>
