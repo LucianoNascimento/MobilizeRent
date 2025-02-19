@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +14,7 @@ Route::get('/images/{id}', [ImageController::class, 'show'])->name('vehicle.show
 Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicle.index');
 Route::post('/vehicles', [VehicleController::class, 'store'])->name('vehicle.store');
 Route::post('/images', [ImageController::class, 'store'])->name('image.store');
+Route::apiResource('/users',UserController::class);
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::put('/image/{id}', [ImageController::class, 'update'])->name('image.update');
