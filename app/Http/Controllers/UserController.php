@@ -7,6 +7,7 @@ use App\Services\User\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -39,7 +40,7 @@ class UserController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-//        $users = Auth::user(); //validar autenticação
+        $users = Auth::user(); //validar autenticação
 
         $user = User::create($request->all());
 
