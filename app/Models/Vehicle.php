@@ -14,10 +14,6 @@ class Vehicle extends Model
 
     protected $hidden = ['id'];
 
-    public function getDailyPriceAttribute($value): string
-    {
-        return 'R$ ' . number_format($value, 2, ',', '.'); // Formata o valor como moeda
-    }
     public function images():HasMany
     {
         return $this->hasMany(Image::class);

@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
 
+Route::post('/register', [RegisterController::class, 'register'])->name('auth.register');
+Route::post('/login', [RegisterController::class, 'login'])->name('auth.login');
 Route::get('/images', [ImageController::class, 'index'])->name('image.index');
 Route::get('/images/{id}', [ImageController::class, 'show'])->name('vehicle.show');
 Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicle.index');
