@@ -4,11 +4,22 @@ namespace App\Repositories\User;
 
 
 use App\Models\User;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserRepository implements UserRepositoryInterface
 {
+    public function getAllUsers(): Collection
+    {
+        return User::all();
+    }
+
+    public function findUserByID($id): ?User
+    {
+        return User::findOrFail($id);
+    }
+
     public function create(array $data): User
     {
         return User::create([
