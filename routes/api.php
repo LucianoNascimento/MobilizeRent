@@ -26,6 +26,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/reservations', [ReservationController::class, 'index'])->name('reservation.index');
     Route::post('/reservations', [ReservationController::class, 'store'])->name('reservation.store');
     Route::put('/reservation/{id}', [ReservationController::class, 'update'])->name('reservation.update');
+    Route::get('/reservation/{status}',[ReservationController::class,'showStatus'])->name('reservation.status');
     Route::patch('/reservation/{id}/status', [ReservationController::class, 'updateStatus'])->name('reservation.updateStatus');
     Route::delete('/reservation/{id}', [ReservationController::class, 'destroy'])->name('reservation.destroy');
 
