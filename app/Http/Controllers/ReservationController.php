@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Reservation;
 use App\Services\Reservation\ReservationService;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -36,6 +37,16 @@ class ReservationController extends Controller
         $this->reservationService->updateReserve($id, $request->all());
 
         return response()->json($reservation, Response::HTTP_OK);
+    }
+
+    public function showStatus(string $status): JsonResponse
+    {
+        try {
+            $reservationStatus = $this->reservationService->viewStatus($status);
+            return response()->json($reservationStatus, Response::HTTP_OK);
+        } catch (Exception $exception) {
+            return response()->json(['error' => $exception->getMessage()], Response::HTTP_NOT_FOUND);
+        }
     }
 
     public function updateStatus(Request $request, int $id): JsonResponse

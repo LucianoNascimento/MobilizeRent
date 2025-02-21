@@ -13,6 +13,8 @@ class Reservation extends Model
 
     protected $fillable = ['user_id', 'vehicle_id', 'price', 'status', 'reservation_date', 'end_date'];
 
+    protected $hidden = ['id', 'user_id', 'vehicle_id'];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

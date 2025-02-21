@@ -4,6 +4,7 @@ namespace App\Repositories\Reservation;
 
 use App\Models\Reservation;
 use App\Models\Vehicle;
+use Illuminate\Database\Eloquent\Collection;
 
 class ReservationRepository implements ReservationInterface
 {
@@ -23,6 +24,11 @@ class ReservationRepository implements ReservationInterface
     public function update(Reservation $reservation, array $data): bool
     {
         return $reservation->update($data);
+    }
+
+    public function showStatus(string $status): Collection
+    {
+        return Reservation::where('status', $status)->get();
     }
 
     public function findReservationById(int $id): Reservation
