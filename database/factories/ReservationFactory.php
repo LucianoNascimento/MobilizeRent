@@ -14,8 +14,8 @@ class ReservationFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
-            'vehicle_id' => Vehicle::factory(),
+            'user_id' => User::inRandomOrder()->first()->id,
+            'vehicle_id' => Vehicle::inRandomOrder()->first()->id,
             'price' => $this->faker->randomFloat(2, 100, 1000),
             'status' => $this->faker->randomElement(['pending', 'confirmed', 'cancelled']),
             'reservation_date' => $this->faker->dateTimeBetween('-1 week', '+1 week'),

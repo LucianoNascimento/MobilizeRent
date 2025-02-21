@@ -40,7 +40,7 @@ class UserController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        $users = Auth::user(); //validar autenticação
+        $users = Auth::user();
 
         $user = User::create($request->all());
 
