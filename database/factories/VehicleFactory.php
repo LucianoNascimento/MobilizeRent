@@ -18,7 +18,8 @@ class VehicleFactory extends Factory
     public function definition(): array
     {
         return [
-            'vehicle_type' => $this->faker->randomElement(['Car', 'Motorcycle']),
+            'vehicle_type' => $this->faker->randomElement(['Carro', 'Moto',
+                'Caminhão', 'Van', 'Quadriciclo', 'Triciclo']),
             'model' => $this->faker->date(),
             'brand' => $this->faker->company(),
             'color' => $this->faker->safeColorName(),
