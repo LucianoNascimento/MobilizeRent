@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+
+use App\Notifications\UserRegistered;
 use App\Services\User\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
+
 
 class UserController extends Controller
 {
@@ -40,11 +43,14 @@ class UserController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        $users = Auth::user();
+//        $users = Auth::user();
 
         $user = User::create($request->all());
 
+        Notification::send($user, new UserRegistered($user));
+
         return response()->json($user, Response::HTTP_CREATED);
+
     }
 
     /**
