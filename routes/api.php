@@ -16,7 +16,7 @@ Route::post('/vehicles', [VehicleController::class, 'store'])->name('vehicle.sto
 Route::post('/images', [ImageController::class, 'store'])->name('image.store');
 Route::apiResource('/users',UserController::class);
 Route::middleware('auth:sanctum')->group(function () {
-
+    Route::get('/dashboard');
     Route::put('/image/{id}', [ImageController::class, 'update'])->name('image.update');
     Route::patch('/image/{id}', [ImageController::class, 'updateStatus'])->name('image.updateImage');
     Route::delete('/image/{id}', [ImageController::class, 'destroy'])->name('image.destroy');;
