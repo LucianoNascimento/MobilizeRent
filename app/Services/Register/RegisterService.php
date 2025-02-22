@@ -3,11 +3,11 @@
 namespace App\Services\Register;
 
 use App\Models\User;
+use App\Notifications\UserRegistered;
 use App\Repositories\User\UserRepository;
 use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 
 class RegisterService
 {
@@ -26,9 +26,11 @@ class RegisterService
      */
     public function registerUser(array $data): User
     {
-        // Criando o usuário
         $user = $this->userRepository->create($data);
-        $token = $user->createToken('Personal Access Token')->plainTextToken;
+        $user->createToken('Personal Access Token')->plainTextToken;
+
+        Notification::send($user, new UserRegistered($user));
+
         return $user;
     }
 
